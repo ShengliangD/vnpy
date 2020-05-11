@@ -167,6 +167,11 @@ class CtaEngine(BaseEngine):
 
         strategy = self.orderid_strategy_map.get(order.vt_orderid, None)
         if not strategy:
+            order.status = Status.EXTERNAL
+            ss = self.symbol_strategy_map[order.vt_symbol]
+            if ss:
+                for s in ss:
+                    self.call_strategy_func(s, s.on_order, order)
             return
 
         # Remove vt_orderid if order is no longer active.
