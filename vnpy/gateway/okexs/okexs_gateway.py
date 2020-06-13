@@ -532,7 +532,7 @@ class OkexsRestApi(RestClient):
         index.sort()
 
         history = [buf[i] for i in index]
-        return history
+        return history[:-1]
 
 
 class OkexsWebsocketApi(WebsocketClient):
